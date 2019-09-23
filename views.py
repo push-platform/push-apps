@@ -16,7 +16,7 @@ from temba.utils.text import random_string
 
 
 class IndexView(SmartTemplateView):
-    template_name = "push/public_index.haml"
+    template_name = "public_index.haml"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,17 +1,17 @@
 import boto3
 
-from smartmin.views import SmartFormView
-
 from django import forms
+from django.urls import reverse
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+
+from smartmin.views import SmartFormView
+from colorful.widgets import ColorFieldWidget
 
 from temba.channels.models import Channel
 from temba.channels.views import ClaimViewMixin
 from temba.contacts.models import EXTERNAL_SCHEME
-
-from colorful.widgets import ColorFieldWidget
 from temba.utils.s3 import public_file_storage
-from django.conf import settings
 
 
 class PushinhoView(ClaimViewMixin, SmartFormView):
@@ -115,3 +115,9 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
         )
 
         return super(PushinhoView, self).form_valid(form)
+
+    def get_success_url(self):
+        if self.channel_type.show_config_page:
+            return reverse("pushinho_configuration", args=[self.object.uuid])
+        else:
+            return reverse("pushinho_configuration", args=[self.object.uuid])
