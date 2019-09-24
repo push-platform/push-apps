@@ -1,4 +1,3 @@
-from django.views.generic import DetailView
 from smartmin.views import SmartReadView
 from django.conf import settings
 
