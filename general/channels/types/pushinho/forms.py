@@ -14,13 +14,13 @@ from .utils import upload_icon_to_aws, create_config
 class PushinhoForm(forms.Form):
     channel_name = forms.CharField(max_length=40)
 
-    main_icon = forms.ImageField(widget=forms.FileInput(attrs={"required": True}))
+    main_icon = forms.ImageField(required=True)
     main_icon_color = forms.CharField(
         max_length=7,
         help_text=_('Hexa Decimal Colour'),
         widget=ColorFieldWidget())
 
-    chat_icon = forms.ImageField(widget=forms.FileInput(attrs={"required": True}))
+    chat_icon = forms.ImageField(required=True)
     chat_icon_color = forms.CharField(
         max_length=7,
         help_text=_('Hexa Decimal Colour'),
@@ -54,10 +54,11 @@ class PushinhoFormCreate(PushinhoForm, ClaimViewMixin.Form):
 class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
 
     def add_config_fields(self):
+        self.fields["main_icon"].required = False
+        self.fields["chat_icon"].required = False
+
         self.fields["channel_name"].initial = self.object.name
-        self.fields["main_icon"].initial = self.object.config["main_icon_url"]
         self.fields["main_icon_color"].initial = self.object.config["main_icon_color"]
-        self.fields["chat_icon"].initial = self.object.config["chat_icon_url"]
         self.fields["chat_icon_color"].initial = self.object.config["chat_icon_color"]
         self.fields["chat_push_message_color"].initial = self.object.config["chat_push_message_color"]
         self.fields["chat_push_text_color"].initial = self.object.config["chat_push_text_color"]
@@ -75,16 +76,26 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
         helps = {}
 
     def save(self, commit=True):
+        instance = super(PushinhoFormUpdate, self).save(commit=False)
         data = self.data
 
-        main_icon_url = upload_icon_to_aws(self['main_icon'].value())
-        chat_icon_url = upload_icon_to_aws(self['chat_icon'].value())
+        main_icon_url = self['main_icon'].value()
+        chat_icon_url = self['chat_icon'].value()
+
+        if not main_icon_url:
+            main_icon_url = instance.config.get("main_icon_url")
+        else:
+            main_icon_url = upload_icon_to_aws(main_icon_url)
+
+        if not chat_icon_url:
+            main_icon_url = instance.config.get("chat_icon_url")
+        else:
+            chat_icon_url = upload_icon_to_aws(chat_icon_url)
 
         config = create_config(
             main_icon_url=main_icon_url, chat_icon_url=chat_icon_url,
             data=data)
 
-        instance = super(PushinhoFormUpdate, self).save(commit=False)
         instance.name = data["channel_name"]
         instance.config = config
         return super().save(commit)
