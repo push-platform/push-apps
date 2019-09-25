@@ -10,14 +10,16 @@ def upload_icon_to_aws(icon):
     # Initialize connection with AWS and Boto S3
     session = boto3.session.Session(
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
     )
-    s3 = session.resource('s3')
+    s3 = session.resource("s3")
 
     # Upload Icon to bucket on AWS
     main_icon = icon
     main_icon_path = settings.PUSHINHO_ICONS_AWS_PATH + main_icon.name
-    s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).put_object(Key=main_icon_path, Body=main_icon)
+    s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).put_object(
+        Key=main_icon_path, Body=main_icon
+    )
     icon_url = public_file_storage.url(main_icon_path)
     return icon_url
 

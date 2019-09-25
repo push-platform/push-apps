@@ -17,9 +17,9 @@ class PushinhoType(ChannelType):
     name = "Pushinho"
     configuration_urls = ""
 
-    claim_blurb = _(
-        """Connect to your website."""
-    )
+    claim_blurb = _("""Connect to your website.""")
     claim_view = PushinhoView
-    extra_links = [dict(link=_("HTML For Pushinho Configuration"), name="pushinho_configuration")]
+    extra_links = [
+        dict(link=_("HTML For Pushinho Configuration"), name="pushinho_configuration")
+    ]
     update_form = PushinhoFormUpdate

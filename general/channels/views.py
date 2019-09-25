@@ -17,8 +17,12 @@ class ChannelConfiguration(SmartReadView):
 
         # populate with our channel type
         channel_type = Channel.get_type_from_code(self.object.channel_type)
-        context["configuration_template"] = channel_type.get_configuration_template(self.object)
-        context["configuration_blurb"] = channel_type.get_configuration_blurb(self.object)
+        context["configuration_template"] = channel_type.get_configuration_template(
+            self.object
+        )
+        context["configuration_blurb"] = channel_type.get_configuration_blurb(
+            self.object
+        )
         context["configuration_urls"] = channel_type.get_configuration_urls(self.object)
         context["show_public_addresses"] = channel_type.show_public_addresses
 

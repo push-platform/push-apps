@@ -29,8 +29,7 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
 
         # Get a config for Channel and Save on Model
         config = create_config(
-            main_icon_url=main_icon_url, chat_icon_url=chat_icon_url,
-            data=data
+            main_icon_url=main_icon_url, chat_icon_url=chat_icon_url, data=data
         )
 
         # Define a channel
@@ -44,9 +43,15 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
 
         # Configure a External Channel
         self.object = Channel.add_config_external_channel(
-            org=org, user=self.request.user, country=None, address=data["channel_name"],
-            channel_type=self.channel_type, config=config, role=role, schemes=[EXTERNAL_SCHEME],
-            parent=channel
+            org=org,
+            user=self.request.user,
+            country=None,
+            address=data["channel_name"],
+            channel_type=self.channel_type,
+            config=config,
+            role=role,
+            schemes=[EXTERNAL_SCHEME],
+            parent=channel,
         )
 
         return super(PushinhoView, self).form_valid(form)
