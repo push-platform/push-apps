@@ -8,7 +8,7 @@ For Run the features For New Push inside [RapidPro](http://rapidpro.github.io/ra
 
 ### Configure `settings.py` for New Push
 
-It's necessary configure the `settings.py` for couple RapidPro and NewPush. Then, Application for RapidPro can see templates and code (channel_types, installed_apps and etc).  
+It's necessary to configure the `settings.py` to enable NewPush on RapidPro.. Then, Application for RapidPro can see templates and code (channel_types, installed_apps and etc).  
 
 For configure the settings, must override the variables:
 
