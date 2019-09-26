@@ -10,7 +10,7 @@ from temba.channels.models import Channel
 from temba.contacts.models import EXTERNAL_SCHEME
 
 from .type import PushinhoType
-from .utils import upload_icon_to_aws
+from .utils import upload_icon_to_aws, create_config
 
 
 class PushinhoTypeTest(TembaTest):
@@ -205,3 +205,36 @@ class UploadFileToAWS(TembaTest):
         main_icon = open(os.path.join(BASE_DIR, "pushinho/test_files/profile_one.png"), "rb")
 
         self.assertTrue(upload_icon_to_aws(main_icon))
+
+
+class CreateConfigForAPushinhoChannel(TembaTest):
+
+    def test_method_for_create_a_config_for_pushinho_channel(self):
+        data = {
+            "main_icon_color": "#18fae2",
+            "chat_icon_color": "#a40aee",
+            "chat_push_message_color": "#23a519",
+            "chat_push_text_color": "#dbf609",
+            "chat_user_text_color": "#e2e0f0",
+            "auto_open": False,
+            "keyword": "keyword_test",
+            "welcome_message": "welcome to a flow",
+        }
+        main_icon_url = "https://test-inbox-dev.test/main_icon.jpg"
+        chat_icon_url = "https://test-inbox-dev.test/chat_icon.jpg"
+
+        config = create_config(main_icon_url, chat_icon_url, data)
+
+        self.assertEqual(config.get("main_icon_url"), main_icon_url)
+        self.assertEqual(config.get("main_icon_color"), data.get("main_icon_color"))
+        self.assertEqual(config.get("chat_icon_color"), data.get("chat_icon_color"))
+        self.assertEqual(config.get("chat_icon_url"), chat_icon_url)
+        self.assertEqual(config.get("chat_push_message_color"), data.get("chat_push_message_color"))
+        self.assertEqual(config.get("chat_push_text_color"), data.get("chat_push_text_color"))
+        self.assertEqual(config.get("chat_user_text_color"), data.get("chat_user_text_color"))
+        self.assertEqual(config.get("auto_open"), "false")
+        self.assertEqual(config.get(Channel.CONFIG_SEND_URL), settings.PUSH_WEB_SOCKET_URL)
+        self.assertEqual(config.get(Channel.CONFIG_SEND_METHOD), "POST")
+        self.assertEqual(config.get(Channel.CONFIG_CONTENT_TYPE), Channel.CONTENT_TYPES.get("CONTENT_TYPE_JSON"))
+        self.assertEqual(config.get(Channel.CONFIG_MAX_LENGTH), 640)
+        self.assertEqual(config.get(Channel.CONFIG_ENCODING), Channel.ENCODING_DEFAULT)
