@@ -16,11 +16,11 @@ def upload_icon_to_aws(icon):
 
     # Upload Icon to bucket on AWS
     main_icon = icon
-    main_icon_path = settings.PUSHINHO_ICONS_AWS_PATH + main_icon.name
+    icon_path = settings.PUSHINHO_ICONS_AWS_PATH + icon.name
     s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).put_object(
-        Key=main_icon_path, Body=main_icon
+        Key=icon_path, Body=main_icon
     )
-    icon_url = public_file_storage.url(main_icon_path)
+    icon_url = public_file_storage.url(icon_path)
     return icon_url
 
 

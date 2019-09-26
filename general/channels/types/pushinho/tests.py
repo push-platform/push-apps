@@ -10,6 +10,7 @@ from temba.channels.models import Channel
 from temba.contacts.models import EXTERNAL_SCHEME
 
 from .type import PushinhoType
+from .utils import upload_icon_to_aws
 
 
 class PushinhoTypeTest(TembaTest):
@@ -200,4 +201,7 @@ class PushinhoTypeTest(TembaTest):
 class UploadFileToAWS(TembaTest):
 
     def test_upload_file_to_aws(self):
-        pass
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        main_icon = open(os.path.join(BASE_DIR, "pushinho/test_files/profile_one.png"), "rb")
+
+        self.assertTrue(upload_icon_to_aws(main_icon))
