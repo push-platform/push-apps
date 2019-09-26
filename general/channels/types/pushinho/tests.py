@@ -160,6 +160,42 @@ class PushinhoTypeTest(TembaTest):
         response = self.client.post(url, post_data)
         self.assertTrue(response.context.get('form').errors)
 
+    def test_configuration_pushinho_channel(self):
+        url = reverse("channels.types.pushinho.claim")
+
+        self.login(self.admin)
+
+        # check that claim page URL appears on claim list page
+        response = self.client.get(reverse("channels.channel_claim"))
+
+        self.assertContains(response, url)
+
+        # try to claim a channel
+        Channel.objects.all().delete()
+        response = self.client.get(url)
+        post_data = response.context["form"].initial
+
+        main_icon = open(os.path.join(self.BASE_DIR, "pushinho/test_files/profile_one.png"), "rb")
+        chat_icon = open(os.path.join(self.BASE_DIR, "pushinho/test_files/profile_two.png"), "rb")
+
+        post_data["channel_name"] = "The New Channel"
+        post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
+        post_data["main_icon_color"] = "#18fae2"
+        post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
+        post_data["chat_icon_color"] = "#a40aee"
+        post_data["chat_push_message_color"] = "#23a519"
+        post_data["chat_push_text_color"] = "#dbf609"
+        post_data["chat_user_text_color"] = "#e2e0f0"
+        post_data["auto_open"] = True
+        post_data["keyword"] = "welcome_keyword"
+        post_data["welcome_message"] = "Welcome to a Channel"
+
+        response = self.client.post(url, post_data)
+        channel_updated = Channel.objects.get()
+
+        response = self.client.get(reverse("pushinho_configuration", args=[channel_updated.uuid]))
+        self.assertEqual(response.status_code, 200)
+
 
 class UploadFileToAWS(TembaTest):
 
