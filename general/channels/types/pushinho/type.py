@@ -15,11 +15,10 @@ class PushinhoType(ChannelType):
     category = ChannelType.Category.API
 
     name = "Pushinho"
-    configuration_urls = ""
 
     claim_blurb = _("""Connect to your website.""")
     claim_view = PushinhoView
     extra_links = [
-        dict(link=_("HTML For Pushinho Configuration"), name="pushinho_configuration")
+        dict(link=_("HTML For Pushinho Configuration to Integrate to your Website"), name="pushinho_configuration")
     ]
     update_form = PushinhoFormUpdate

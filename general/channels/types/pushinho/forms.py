@@ -8,7 +8,12 @@ from temba.channels.views import UpdateChannelForm
 from temba.channels.models import Channel
 from temba.channels.views import ClaimViewMixin
 
-from .utils import upload_icon_to_aws, create_config
+from .utils import (
+    MAIN_ICON_URL,
+    CHAT_ICON_URL,
+    upload_icon_to_aws,
+    create_config
+)
 
 
 class PushinhoForm(forms.Form):
@@ -16,21 +21,21 @@ class PushinhoForm(forms.Form):
 
     main_icon = forms.ImageField(required=True)
     main_icon_color = forms.CharField(
-        max_length=7, help_text=_("Hexa Decimal Colour"), widget=ColorFieldWidget()
+        max_length=7, help_text=_("Hexa Decimal Color"), widget=ColorFieldWidget()
     )
 
     chat_icon = forms.ImageField(required=True)
     chat_icon_color = forms.CharField(
-        max_length=7, help_text=_("Hexa Decimal Colour"), widget=ColorFieldWidget()
+        max_length=7, help_text=_("Hexa Decimal Color"), widget=ColorFieldWidget()
     )
     chat_push_message_color = forms.CharField(
-        max_length=7, help_text=_("Hexa Decimal Colour"), widget=ColorFieldWidget()
+        max_length=7, help_text=_("Hexa Decimal Color"), widget=ColorFieldWidget()
     )
     chat_push_text_color = forms.CharField(
-        max_length=7, help_text=_("Hexa Decimal Colour"), widget=ColorFieldWidget()
+        max_length=7, help_text=_("Hexa Decimal Color"), widget=ColorFieldWidget()
     )
     chat_user_text_color = forms.CharField(
-        max_length=7, help_text=_("Hexa Decimal Colour"), widget=ColorFieldWidget()
+        max_length=7, help_text=_("Hexa Decimal Color"), widget=ColorFieldWidget()
     )
 
     auto_open = forms.BooleanField(required=False)
@@ -85,12 +90,12 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
         chat_icon_url = self["chat_icon"].value()
 
         if not main_icon_url:
-            main_icon_url = instance.config.get("main_icon_url")
+            main_icon_url = instance.config.get(MAIN_ICON_URL)
         else:
             main_icon_url = upload_icon_to_aws(main_icon_url)
 
         if not chat_icon_url:
-            main_icon_url = instance.config.get("chat_icon_url")
+            chat_icon_url = instance.config.get(CHAT_ICON_URL)
         else:
             chat_icon_url = upload_icon_to_aws(chat_icon_url)
 

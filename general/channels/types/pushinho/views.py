@@ -8,7 +8,10 @@ from temba.channels.views import ClaimViewMixin
 from temba.contacts.models import EXTERNAL_SCHEME
 
 from .forms import PushinhoFormCreate
-from .utils import upload_icon_to_aws, create_config
+from .utils import (
+    upload_icon_to_aws,
+    create_config
+)
 
 
 class PushinhoView(ClaimViewMixin, SmartFormView):

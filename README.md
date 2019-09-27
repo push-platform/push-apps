@@ -2,9 +2,9 @@
 
 This repository contains a code for a New Push Application. This projects depends on RapidPro and all libs and services that RapidPro run.  
 
-The idea for this project is: There are a folder `push-public` that contains all features for New Push. `push-public` folder must be couple inside a root for RapidPro project, and then there are all features about RapidPro and all exclusive features about New Push.
+The idea for this project is: There is a folder `push-public` that contains all features for New Push. `push-public` folder must be couple inside a root for RapidPro project, and then there are all features about RapidPro and all exclusive features about New Push.
 
-For Run the features For New Push inside [RapidPro](http://rapidpro.github.io/rapidpro/docs/), needs setup RapidPro project, and then setup environment variables for New Push and the libs.
+For run the features for New Push, you need to setup a [RapidPro](http://rapidpro.github.io/rapidpro/docs/) project, and then setup environment variables for New Push and libs.
 
 ### Configure `settings.py` for New Push
 

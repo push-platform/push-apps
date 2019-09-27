@@ -9,8 +9,14 @@ from temba.tests import TembaTest
 from temba.channels.models import Channel
 from temba.contacts.models import EXTERNAL_SCHEME
 
-from .type import PushinhoType
-from .utils import upload_icon_to_aws, create_config
+from .utils import (
+    MAIN_ICON_URL,
+    CHAT_ICON_URL,
+    upload_icon_to_aws,
+    create_config
+)
+
+from.type import PushinhoType
 
 
 class PushinhoTypeTest(TembaTest):
@@ -262,10 +268,10 @@ class CreateConfigForAPushinhoChannel(TembaTest):
 
         config = create_config(main_icon_url, chat_icon_url, data)
 
-        self.assertEqual(config.get("main_icon_url"), main_icon_url)
+        self.assertEqual(config.get(MAIN_ICON_URL), main_icon_url)
         self.assertEqual(config.get("main_icon_color"), data.get("main_icon_color"))
         self.assertEqual(config.get("chat_icon_color"), data.get("chat_icon_color"))
-        self.assertEqual(config.get("chat_icon_url"), chat_icon_url)
+        self.assertEqual(config.get(CHAT_ICON_URL), chat_icon_url)
         self.assertEqual(
             config.get("chat_push_message_color"), data.get("chat_push_message_color")
         )
