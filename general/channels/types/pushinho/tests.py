@@ -16,7 +16,7 @@ from .utils import (
     create_config
 )
 
-from.type import PushinhoType
+from .type import PushinhoType
 
 
 class PushinhoTypeTest(TembaTest):
