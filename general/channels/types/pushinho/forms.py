@@ -9,8 +9,16 @@ from temba.channels.models import Channel
 from temba.channels.views import ClaimViewMixin
 
 from .utils import (
+    MAIN_ICON_COLOR,
     MAIN_ICON_URL,
+    CHAT_ICON_COLOR,
     CHAT_ICON_URL,
+    CHAT_PUSH_MESSAGE_COLOR,
+    CHAT_PUSH_TEXT_COLOR,
+    CHAT_USER_TEXT_COLOR,
+    AUTO_OPEN,
+    WELCOME_BUTTON,
+    WELCOME_MESSAGE,
     upload_icon_to_aws,
     create_config
 )
@@ -43,7 +51,7 @@ class PushinhoForm(forms.Form):
     welcome_message = forms.CharField(required=False)
 
     def clean(self):
-        if self.data.get("welcome_message") and not self.data.get("keyword"):
+        if self.data.get(WELCOME_MESSAGE) and not self.data.get("keyword"):
             raise forms.ValidationError(
                 _("You cannot add a Welcome Message without a Keyword")
             )
@@ -59,20 +67,20 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
         self.fields["chat_icon"].required = False
 
         self.fields["channel_name"].initial = self.object.name
-        self.fields["main_icon_color"].initial = self.object.config["main_icon_color"]
-        self.fields["chat_icon_color"].initial = self.object.config["chat_icon_color"]
-        self.fields["chat_push_message_color"].initial = self.object.config[
-            "chat_push_message_color"
+        self.fields[MAIN_ICON_COLOR].initial = self.object.config[MAIN_ICON_COLOR]
+        self.fields[CHAT_ICON_COLOR].initial = self.object.config[CHAT_ICON_COLOR]
+        self.fields[CHAT_PUSH_MESSAGE_COLOR].initial = self.object.config[
+            CHAT_PUSH_MESSAGE_COLOR
         ]
-        self.fields["chat_push_text_color"].initial = self.object.config[
-            "chat_push_text_color"
+        self.fields[CHAT_PUSH_TEXT_COLOR].initial = self.object.config[
+            CHAT_PUSH_TEXT_COLOR
         ]
-        self.fields["chat_user_text_color"].initial = self.object.config[
-            "chat_user_text_color"
+        self.fields[CHAT_USER_TEXT_COLOR].initial = self.object.config[
+            CHAT_USER_TEXT_COLOR
         ]
-        self.fields["auto_open"].initial = self.object.config["auto_open"]
-        self.fields["keyword"].initial = self.object.config["welcome_button"]
-        self.fields["welcome_message"].initial = self.object.config["welcome_message"]
+        self.fields[AUTO_OPEN].initial = self.object.config[AUTO_OPEN]
+        self.fields["keyword"].initial = self.object.config[WELCOME_BUTTON]
+        self.fields[WELCOME_MESSAGE].initial = self.object.config[WELCOME_MESSAGE]
 
     class Meta:
         model = Channel

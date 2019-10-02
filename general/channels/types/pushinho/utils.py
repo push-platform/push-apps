@@ -6,8 +6,16 @@ from temba.channels.models import Channel
 from temba.utils.s3 import public_file_storage
 
 
+MAIN_ICON_COLOR = "main_icon_color"
 MAIN_ICON_URL = "main_icon_url"
+CHAT_ICON_COLOR = "chat_icon_color"
 CHAT_ICON_URL = "chat_icon_url"
+CHAT_PUSH_MESSAGE_COLOR = "chat_push_message_color"
+CHAT_PUSH_TEXT_COLOR = "chat_push_text_color"
+CHAT_USER_TEXT_COLOR = "chat_user_text_color"
+AUTO_OPEN = "auto_open"
+WELCOME_BUTTON = "welcome_button"
+WELCOME_MESSAGE = "welcome_message"
 
 
 def upload_icon_to_aws(icon):
@@ -30,20 +38,20 @@ def upload_icon_to_aws(icon):
 
 def create_config(main_icon_url, chat_icon_url, data):
 
-    auto_open = str(data.get("auto_open")).casefold()
+    auto_open = str(data.get(AUTO_OPEN)).casefold()
 
     # Dict Config for save informations and show on HTML Returns
     config = {
         MAIN_ICON_URL: main_icon_url,
-        "main_icon_color": data.get("main_icon_color"),
-        "chat_icon_color": data.get("chat_icon_color"),
+        MAIN_ICON_COLOR: data.get(MAIN_ICON_COLOR),
+        CHAT_ICON_COLOR: data.get(CHAT_ICON_COLOR),
         CHAT_ICON_URL: chat_icon_url,
-        "chat_push_message_color": data.get("chat_push_message_color"),
-        "chat_push_text_color": data.get("chat_push_text_color"),
-        "chat_user_text_color": data.get("chat_user_text_color"),
-        "auto_open": auto_open,
-        "welcome_button": data.get("keyword"),
-        "welcome_message": data.get("welcome_message"),
+        CHAT_PUSH_MESSAGE_COLOR: data.get(CHAT_PUSH_MESSAGE_COLOR),
+        CHAT_PUSH_TEXT_COLOR: data.get(CHAT_PUSH_TEXT_COLOR),
+        CHAT_USER_TEXT_COLOR: data.get(CHAT_USER_TEXT_COLOR),
+        AUTO_OPEN: auto_open,
+        WELCOME_BUTTON: data.get("keyword"),
+        WELCOME_MESSAGE: data.get(WELCOME_MESSAGE),
         Channel.CONFIG_SEND_URL: settings.PUSH_WEB_SOCKET_URL,
         Channel.CONFIG_SEND_METHOD: "POST",
         Channel.CONFIG_CONTENT_TYPE: Channel.CONTENT_TYPES.get("CONTENT_TYPE_JSON"),

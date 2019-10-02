@@ -10,8 +10,16 @@ from temba.channels.models import Channel
 from temba.contacts.models import EXTERNAL_SCHEME
 
 from .utils import (
+    MAIN_ICON_COLOR,
     MAIN_ICON_URL,
+    CHAT_ICON_COLOR,
     CHAT_ICON_URL,
+    CHAT_PUSH_MESSAGE_COLOR,
+    CHAT_PUSH_TEXT_COLOR,
+    CHAT_USER_TEXT_COLOR,
+    AUTO_OPEN,
+    WELCOME_BUTTON,
+    WELCOME_MESSAGE,
     upload_icon_to_aws,
     create_config
 )
@@ -47,15 +55,15 @@ class PushinhoTypeTest(TembaTest):
 
         post_data["channel_name"] = "The New Channel"
         post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
-        post_data["main_icon_color"] = "#18fae2"
+        post_data[MAIN_ICON_COLOR] = "#18fae2"
         post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
-        post_data["chat_icon_color"] = "#a40aee"
-        post_data["chat_push_message_color"] = "#23a519"
-        post_data["chat_push_text_color"] = "#dbf609"
-        post_data["chat_user_text_color"] = "#e2e0f0"
-        post_data["auto_open"] = True
+        post_data[CHAT_ICON_COLOR] = "#a40aee"
+        post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
+        post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
+        post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
+        post_data[AUTO_OPEN] = True
         post_data["keyword"] = "welcome_keyword"
-        post_data["welcome_message"] = "Welcome to a Channel"
+        post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
         pushinho_channel = Channel.objects.get()
@@ -99,15 +107,15 @@ class PushinhoTypeTest(TembaTest):
 
         post_data["channel_name"] = "The New Channel"
         post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
-        post_data["main_icon_color"] = "#18fae2"
+        post_data[MAIN_ICON_COLOR] = "#18fae2"
         post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
-        post_data["chat_icon_color"] = "#a40aee"
-        post_data["chat_push_message_color"] = "#23a519"
-        post_data["chat_push_text_color"] = "#dbf609"
-        post_data["chat_user_text_color"] = "#e2e0f0"
-        post_data["auto_open"] = True
+        post_data[CHAT_ICON_COLOR] = "#a40aee"
+        post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
+        post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
+        post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
+        post_data[AUTO_OPEN] = True
         post_data["keyword"] = "welcome_keyword"
-        post_data["welcome_message"] = "Welcome to a Channel"
+        post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
         pushinho_channel = Channel.objects.get()
@@ -120,26 +128,26 @@ class PushinhoTypeTest(TembaTest):
 
         self.assertEqual(post_data_initial.get("name"), pushinho_channel.name)
         self.assertEqual(
-            post_data_initial.get("config").get("main_icon_color"), "#18fae2"
+            post_data_initial.get("config").get(MAIN_ICON_COLOR), "#18fae2"
         )
         self.assertEqual(
-            post_data_initial.get("config").get("chat_icon_color"), "#a40aee"
+            post_data_initial.get("config").get(CHAT_ICON_COLOR), "#a40aee"
         )
         self.assertEqual(
-            post_data_initial.get("config").get("chat_push_message_color"), "#23a519"
+            post_data_initial.get("config").get(CHAT_PUSH_MESSAGE_COLOR), "#23a519"
         )
         self.assertEqual(
-            post_data_initial.get("config").get("chat_push_text_color"), "#dbf609"
+            post_data_initial.get("config").get(CHAT_PUSH_TEXT_COLOR), "#dbf609"
         )
         self.assertEqual(
-            post_data_initial.get("config").get("chat_user_text_color"), "#e2e0f0"
+            post_data_initial.get("config").get(CHAT_USER_TEXT_COLOR), "#e2e0f0"
         )
-        self.assertEqual(post_data_initial.get("config").get("auto_open"), "true")
+        self.assertEqual(post_data_initial.get("config").get(AUTO_OPEN), "true")
         self.assertEqual(
-            post_data_initial.get("config").get("welcome_button"), "welcome_keyword"
+            post_data_initial.get("config").get(WELCOME_BUTTON), "welcome_keyword"
         )
         self.assertEqual(
-            post_data_initial.get("config").get("welcome_message"),
+            post_data_initial.get("config").get(WELCOME_MESSAGE),
             "Welcome to a Channel",
         )
 
@@ -147,20 +155,20 @@ class PushinhoTypeTest(TembaTest):
         post_data["main_icon"] = None
         post_data["chat_icon"] = None
         post_data["channel_name"] = "Pushinho Channel"
-        post_data["main_icon_color"] = "#DCDCDC"
-        post_data["chat_user_text_color"] = "#800080"
-        post_data["auto_open"] = False
+        post_data[MAIN_ICON_COLOR] = "#DCDCDC"
+        post_data[CHAT_USER_TEXT_COLOR] = "#800080"
+        post_data[AUTO_OPEN] = False
         post_data["keyword"] = "keyword"
 
         response = self.client.post(update_url, post_data)
 
         channel_updated = Channel.objects.get()
 
-        self.assertEqual(channel_updated.config.get("main_icon_color"), "#DCDCDC")
+        self.assertEqual(channel_updated.config.get(MAIN_ICON_COLOR), "#DCDCDC")
         self.assertEqual(channel_updated.name, "Pushinho Channel")
-        self.assertEqual(channel_updated.config.get("chat_user_text_color"), "#800080")
-        self.assertEqual(channel_updated.config.get("auto_open"), "false")
-        self.assertEqual(channel_updated.config.get("welcome_button"), "keyword")
+        self.assertEqual(channel_updated.config.get(CHAT_USER_TEXT_COLOR), "#800080")
+        self.assertEqual(channel_updated.config.get(AUTO_OPEN), "false")
+        self.assertEqual(channel_updated.config.get(WELCOME_BUTTON), "keyword")
 
     def test_create_a_channel_with_welcome_message_and_without_keyword(self):
         url = reverse("channels.types.pushinho.claim")
@@ -186,14 +194,14 @@ class PushinhoTypeTest(TembaTest):
 
         post_data["channel_name"] = "The New Channel"
         post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
-        post_data["main_icon_color"] = "#18fae2"
+        post_data[MAIN_ICON_COLOR] = "#18fae2"
         post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
-        post_data["chat_icon_color"] = "#a40aee"
-        post_data["chat_push_message_color"] = "#23a519"
-        post_data["chat_push_text_color"] = "#dbf609"
-        post_data["chat_user_text_color"] = "#e2e0f0"
-        post_data["auto_open"] = True
-        post_data["welcome_message"] = "Welcome to a Channel"
+        post_data[CHAT_ICON_COLOR] = "#a40aee"
+        post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
+        post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
+        post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
+        post_data[AUTO_OPEN] = True
+        post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
         self.assertTrue(response.context.get("form").errors)
@@ -222,15 +230,15 @@ class PushinhoTypeTest(TembaTest):
 
         post_data["channel_name"] = "The New Channel"
         post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
-        post_data["main_icon_color"] = "#18fae2"
+        post_data[MAIN_ICON_COLOR] = "#18fae2"
         post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
-        post_data["chat_icon_color"] = "#a40aee"
-        post_data["chat_push_message_color"] = "#23a519"
-        post_data["chat_push_text_color"] = "#dbf609"
-        post_data["chat_user_text_color"] = "#e2e0f0"
-        post_data["auto_open"] = True
+        post_data[CHAT_ICON_COLOR] = "#a40aee"
+        post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
+        post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
+        post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
+        post_data[AUTO_OPEN] = True
         post_data["keyword"] = "welcome_keyword"
-        post_data["welcome_message"] = "Welcome to a Channel"
+        post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
         channel_updated = Channel.objects.get()
@@ -254,14 +262,14 @@ class UploadFileToAWS(TembaTest):
 class CreateConfigForAPushinhoChannel(TembaTest):
     def test_method_for_create_a_config_for_pushinho_channel(self):
         data = {
-            "main_icon_color": "#18fae2",
-            "chat_icon_color": "#a40aee",
-            "chat_push_message_color": "#23a519",
-            "chat_push_text_color": "#dbf609",
-            "chat_user_text_color": "#e2e0f0",
-            "auto_open": False,
+            MAIN_ICON_COLOR: "#18fae2",
+            CHAT_ICON_COLOR: "#a40aee",
+            CHAT_PUSH_MESSAGE_COLOR: "#23a519",
+            CHAT_PUSH_TEXT_COLOR: "#dbf609",
+            CHAT_USER_TEXT_COLOR: "#e2e0f0",
+            AUTO_OPEN: False,
             "keyword": "keyword_test",
-            "welcome_message": "welcome to a flow",
+            WELCOME_MESSAGE: "welcome to a flow",
         }
         main_icon_url = "https://test-inbox-dev.test/main_icon.jpg"
         chat_icon_url = "https://test-inbox-dev.test/chat_icon.jpg"
@@ -269,19 +277,19 @@ class CreateConfigForAPushinhoChannel(TembaTest):
         config = create_config(main_icon_url, chat_icon_url, data)
 
         self.assertEqual(config.get(MAIN_ICON_URL), main_icon_url)
-        self.assertEqual(config.get("main_icon_color"), data.get("main_icon_color"))
-        self.assertEqual(config.get("chat_icon_color"), data.get("chat_icon_color"))
+        self.assertEqual(config.get(MAIN_ICON_COLOR), data.get(MAIN_ICON_COLOR))
+        self.assertEqual(config.get(CHAT_ICON_COLOR), data.get(CHAT_ICON_COLOR))
         self.assertEqual(config.get(CHAT_ICON_URL), chat_icon_url)
         self.assertEqual(
-            config.get("chat_push_message_color"), data.get("chat_push_message_color")
+            config.get(CHAT_PUSH_MESSAGE_COLOR), data.get(CHAT_PUSH_MESSAGE_COLOR)
         )
         self.assertEqual(
-            config.get("chat_push_text_color"), data.get("chat_push_text_color")
+            config.get(CHAT_PUSH_TEXT_COLOR), data.get(CHAT_PUSH_TEXT_COLOR)
         )
         self.assertEqual(
-            config.get("chat_user_text_color"), data.get("chat_user_text_color")
+            config.get(CHAT_USER_TEXT_COLOR), data.get(CHAT_USER_TEXT_COLOR)
         )
-        self.assertEqual(config.get("auto_open"), "false")
+        self.assertEqual(config.get(AUTO_OPEN), "false")
         self.assertEqual(
             config.get(Channel.CONFIG_SEND_URL), settings.PUSH_WEB_SOCKET_URL
         )
