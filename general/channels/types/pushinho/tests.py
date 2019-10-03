@@ -21,7 +21,6 @@ from .utils import (
     CHAT_PUSH_TEXT_COLOR,
     CHAT_USER_TEXT_COLOR,
     AUTO_OPEN,
-    KEYWORD,
     WELCOME_BUTTON,
     WELCOME_MESSAGE,
     upload_icon_to_aws,
@@ -66,7 +65,7 @@ class PushinhoTypeTest(TembaTest):
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data[KEYWORD] = "welcome_keyword"
+        post_data[WELCOME_BUTTON] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -118,7 +117,7 @@ class PushinhoTypeTest(TembaTest):
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data[KEYWORD] = "welcome_keyword"
+        post_data[WELCOME_BUTTON] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -162,7 +161,7 @@ class PushinhoTypeTest(TembaTest):
         post_data[MAIN_ICON_COLOR] = "#DCDCDC"
         post_data[CHAT_USER_TEXT_COLOR] = "#800080"
         post_data[AUTO_OPEN] = False
-        post_data[KEYWORD] = "keyword"
+        post_data[WELCOME_BUTTON] = WELCOME_BUTTON
 
         response = self.client.post(update_url, post_data)
 
@@ -172,7 +171,7 @@ class PushinhoTypeTest(TembaTest):
         self.assertEqual(channel_updated.name, "Pushinho Channel")
         self.assertEqual(channel_updated.config.get(CHAT_USER_TEXT_COLOR), "#800080")
         self.assertEqual(channel_updated.config.get(AUTO_OPEN), "false")
-        self.assertEqual(channel_updated.config.get(WELCOME_BUTTON), "keyword")
+        self.assertEqual(channel_updated.config.get(WELCOME_BUTTON), WELCOME_BUTTON)
 
     def test_create_a_channel_with_welcome_message_and_without_keyword(self):
         url = reverse("channels.types.pushinho.claim")
@@ -241,7 +240,7 @@ class PushinhoTypeTest(TembaTest):
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data[KEYWORD] = "welcome_keyword"
+        post_data[WELCOME_BUTTON] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -272,7 +271,7 @@ class CreateConfigForAPushinhoChannel(TembaTest):
             CHAT_PUSH_TEXT_COLOR: "#dbf609",
             CHAT_USER_TEXT_COLOR: "#e2e0f0",
             AUTO_OPEN: False,
-            KEYWORD: "keyword_test",
+            WELCOME_BUTTON: "keyword_test",
             WELCOME_MESSAGE: "welcome to a flow",
         }
         main_icon_url = "https://test-inbox-dev.test/main_icon.jpg"

@@ -15,7 +15,6 @@ CHAT_ICON_URL = "chat_icon_url"
 CHAT_PUSH_MESSAGE_COLOR = "chat_push_message_color"
 CHAT_PUSH_TEXT_COLOR = "chat_push_text_color"
 CHAT_USER_TEXT_COLOR = "chat_user_text_color"
-KEYWORD = "keyword"
 AUTO_OPEN = "auto_open"
 WELCOME_BUTTON = "welcome_button"
 WELCOME_MESSAGE = "welcome_message"
@@ -53,7 +52,7 @@ def create_config(main_icon_url, chat_icon_url, data):
         CHAT_PUSH_TEXT_COLOR: data.get(CHAT_PUSH_TEXT_COLOR),
         CHAT_USER_TEXT_COLOR: data.get(CHAT_USER_TEXT_COLOR),
         AUTO_OPEN: auto_open,
-        WELCOME_BUTTON: data.get("keyword"),
+        WELCOME_BUTTON: data.get(WELCOME_BUTTON),
         WELCOME_MESSAGE: data.get(WELCOME_MESSAGE),
         Channel.CONFIG_SEND_URL: settings.PUSH_WEB_SOCKET_URL,
         Channel.CONFIG_SEND_METHOD: "POST",

@@ -20,7 +20,6 @@ from .utils import (
     CHAT_PUSH_TEXT_COLOR,
     CHAT_USER_TEXT_COLOR,
     AUTO_OPEN,
-    KEYWORD,
     WELCOME_BUTTON,
     WELCOME_MESSAGE,
     upload_icon_to_aws,
@@ -51,11 +50,11 @@ class PushinhoForm(forms.Form):
     )
 
     auto_open = forms.BooleanField(required=False)
-    keyword = forms.CharField(required=False)
+    welcome_button = forms.CharField(required=False)
     welcome_message = forms.CharField(required=False)
 
     def clean(self):
-        if self.data.get(WELCOME_MESSAGE) and not self.data.get(KEYWORD):
+        if self.data.get(WELCOME_MESSAGE) and not self.data.get(WELCOME_BUTTON):
             raise forms.ValidationError(
                 _("You cannot add a Welcome Message without a Keyword")
             )
@@ -83,7 +82,7 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
             CHAT_USER_TEXT_COLOR
         ]
         self.fields[AUTO_OPEN].initial = self.object.config[AUTO_OPEN]
-        self.fields[KEYWORD].initial = self.object.config[WELCOME_BUTTON]
+        self.fields[WELCOME_BUTTON].initial = self.object.config[WELCOME_BUTTON]
         self.fields[WELCOME_MESSAGE].initial = self.object.config[WELCOME_MESSAGE]
 
     class Meta:
