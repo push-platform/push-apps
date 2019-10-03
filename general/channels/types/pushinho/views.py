@@ -9,6 +9,9 @@ from temba.contacts.models import EXTERNAL_SCHEME
 
 from .forms import PushinhoFormCreate
 from .utils import (
+    CHANNEL_NAME,
+    MAIN_ICON,
+    CHAT_ICON,
     upload_icon_to_aws,
     create_config
 )
@@ -27,8 +30,8 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
             raise Exception(_("No org for this user, cannot claim"))
 
         # Upload icons and get urls
-        main_icon_url = upload_icon_to_aws(self.request.FILES.get("main_icon"))
-        chat_icon_url = upload_icon_to_aws(self.request.FILES.get("chat_icon"))
+        main_icon_url = upload_icon_to_aws(self.request.FILES.get(MAIN_ICON))
+        chat_icon_url = upload_icon_to_aws(self.request.FILES.get(CHAT_ICON))
 
         # Get a config for Channel and Save on Model
         config = create_config(
@@ -49,7 +52,7 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
             org=org,
             user=self.request.user,
             country=None,
-            address=data["channel_name"],
+            address=data[CHANNEL_NAME],
             channel_type=self.channel_type,
             config=config,
             role=role,

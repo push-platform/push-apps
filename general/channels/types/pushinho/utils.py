@@ -5,14 +5,17 @@ from django.conf import settings
 from temba.channels.models import Channel
 from temba.utils.s3 import public_file_storage
 
-
+CHANNEL_NAME = "channel_name"
+MAIN_ICON = "main_icon"
 MAIN_ICON_COLOR = "main_icon_color"
 MAIN_ICON_URL = "main_icon_url"
+CHAT_ICON = "chat_icon"
 CHAT_ICON_COLOR = "chat_icon_color"
 CHAT_ICON_URL = "chat_icon_url"
 CHAT_PUSH_MESSAGE_COLOR = "chat_push_message_color"
 CHAT_PUSH_TEXT_COLOR = "chat_push_text_color"
 CHAT_USER_TEXT_COLOR = "chat_user_text_color"
+KEYWORD = "keyword"
 AUTO_OPEN = "auto_open"
 WELCOME_BUTTON = "welcome_button"
 WELCOME_MESSAGE = "welcome_message"

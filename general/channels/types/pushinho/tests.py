@@ -10,14 +10,18 @@ from temba.channels.models import Channel
 from temba.contacts.models import EXTERNAL_SCHEME
 
 from .utils import (
+    CHANNEL_NAME,
+    MAIN_ICON,
     MAIN_ICON_COLOR,
     MAIN_ICON_URL,
+    CHAT_ICON,
     CHAT_ICON_COLOR,
     CHAT_ICON_URL,
     CHAT_PUSH_MESSAGE_COLOR,
     CHAT_PUSH_TEXT_COLOR,
     CHAT_USER_TEXT_COLOR,
     AUTO_OPEN,
+    KEYWORD,
     WELCOME_BUTTON,
     WELCOME_MESSAGE,
     upload_icon_to_aws,
@@ -53,16 +57,16 @@ class PushinhoTypeTest(TembaTest):
             os.path.join(self.BASE_DIR, "pushinho/test_files/profile_two.png"), "rb"
         )
 
-        post_data["channel_name"] = "The New Channel"
-        post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
+        post_data[CHANNEL_NAME] = "The New Channel"
+        post_data[MAIN_ICON] = SimpleUploadedFile(main_icon.name, main_icon.read())
         post_data[MAIN_ICON_COLOR] = "#18fae2"
-        post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
+        post_data[CHAT_ICON] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
         post_data[CHAT_ICON_COLOR] = "#a40aee"
         post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data["keyword"] = "welcome_keyword"
+        post_data[KEYWORD] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -105,16 +109,16 @@ class PushinhoTypeTest(TembaTest):
             os.path.join(self.BASE_DIR, "pushinho/test_files/profile_two.png"), "rb"
         )
 
-        post_data["channel_name"] = "The New Channel"
-        post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
+        post_data[CHANNEL_NAME] = "The New Channel"
+        post_data[MAIN_ICON] = SimpleUploadedFile(main_icon.name, main_icon.read())
         post_data[MAIN_ICON_COLOR] = "#18fae2"
-        post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
+        post_data[CHAT_ICON] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
         post_data[CHAT_ICON_COLOR] = "#a40aee"
         post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data["keyword"] = "welcome_keyword"
+        post_data[KEYWORD] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -152,13 +156,13 @@ class PushinhoTypeTest(TembaTest):
         )
 
         # Update a object with view for update
-        post_data["main_icon"] = None
-        post_data["chat_icon"] = None
-        post_data["channel_name"] = "Pushinho Channel"
+        post_data[MAIN_ICON] = None
+        post_data[CHAT_ICON] = None
+        post_data[CHANNEL_NAME] = "Pushinho Channel"
         post_data[MAIN_ICON_COLOR] = "#DCDCDC"
         post_data[CHAT_USER_TEXT_COLOR] = "#800080"
         post_data[AUTO_OPEN] = False
-        post_data["keyword"] = "keyword"
+        post_data[KEYWORD] = "keyword"
 
         response = self.client.post(update_url, post_data)
 
@@ -192,10 +196,10 @@ class PushinhoTypeTest(TembaTest):
             os.path.join(self.BASE_DIR, "pushinho/test_files/profile_two.png"), "rb"
         )
 
-        post_data["channel_name"] = "The New Channel"
-        post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
+        post_data[CHANNEL_NAME] = "The New Channel"
+        post_data[MAIN_ICON] = SimpleUploadedFile(main_icon.name, main_icon.read())
         post_data[MAIN_ICON_COLOR] = "#18fae2"
-        post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
+        post_data[CHAT_ICON] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
         post_data[CHAT_ICON_COLOR] = "#a40aee"
         post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
@@ -228,16 +232,16 @@ class PushinhoTypeTest(TembaTest):
             os.path.join(self.BASE_DIR, "pushinho/test_files/profile_two.png"), "rb"
         )
 
-        post_data["channel_name"] = "The New Channel"
-        post_data["main_icon"] = SimpleUploadedFile(main_icon.name, main_icon.read())
+        post_data[CHANNEL_NAME] = "The New Channel"
+        post_data[MAIN_ICON] = SimpleUploadedFile(main_icon.name, main_icon.read())
         post_data[MAIN_ICON_COLOR] = "#18fae2"
-        post_data["chat_icon"] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
+        post_data[CHAT_ICON] = SimpleUploadedFile(chat_icon.name, chat_icon.read())
         post_data[CHAT_ICON_COLOR] = "#a40aee"
         post_data[CHAT_PUSH_MESSAGE_COLOR] = "#23a519"
         post_data[CHAT_PUSH_TEXT_COLOR] = "#dbf609"
         post_data[CHAT_USER_TEXT_COLOR] = "#e2e0f0"
         post_data[AUTO_OPEN] = True
-        post_data["keyword"] = "welcome_keyword"
+        post_data[KEYWORD] = "welcome_keyword"
         post_data[WELCOME_MESSAGE] = "Welcome to a Channel"
 
         response = self.client.post(url, post_data)
@@ -268,7 +272,7 @@ class CreateConfigForAPushinhoChannel(TembaTest):
             CHAT_PUSH_TEXT_COLOR: "#dbf609",
             CHAT_USER_TEXT_COLOR: "#e2e0f0",
             AUTO_OPEN: False,
-            "keyword": "keyword_test",
+            KEYWORD: "keyword_test",
             WELCOME_MESSAGE: "welcome to a flow",
         }
         main_icon_url = "https://test-inbox-dev.test/main_icon.jpg"

@@ -9,6 +9,9 @@ from temba.channels.models import Channel
 from temba.channels.views import ClaimViewMixin
 
 from .utils import (
+    CHANNEL_NAME,
+    MAIN_ICON,
+    CHAT_ICON,
     MAIN_ICON_COLOR,
     MAIN_ICON_URL,
     CHAT_ICON_COLOR,
@@ -17,6 +20,7 @@ from .utils import (
     CHAT_PUSH_TEXT_COLOR,
     CHAT_USER_TEXT_COLOR,
     AUTO_OPEN,
+    KEYWORD,
     WELCOME_BUTTON,
     WELCOME_MESSAGE,
     upload_icon_to_aws,
@@ -51,7 +55,7 @@ class PushinhoForm(forms.Form):
     welcome_message = forms.CharField(required=False)
 
     def clean(self):
-        if self.data.get(WELCOME_MESSAGE) and not self.data.get("keyword"):
+        if self.data.get(WELCOME_MESSAGE) and not self.data.get(KEYWORD):
             raise forms.ValidationError(
                 _("You cannot add a Welcome Message without a Keyword")
             )
@@ -63,10 +67,10 @@ class PushinhoFormCreate(PushinhoForm, ClaimViewMixin.Form):
 
 class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
     def add_config_fields(self):
-        self.fields["main_icon"].required = False
-        self.fields["chat_icon"].required = False
+        self.fields[MAIN_ICON].required = False
+        self.fields[CHAT_ICON].required = False
 
-        self.fields["channel_name"].initial = self.object.name
+        self.fields[CHANNEL_NAME].initial = self.object.name
         self.fields[MAIN_ICON_COLOR].initial = self.object.config[MAIN_ICON_COLOR]
         self.fields[CHAT_ICON_COLOR].initial = self.object.config[CHAT_ICON_COLOR]
         self.fields[CHAT_PUSH_MESSAGE_COLOR].initial = self.object.config[
@@ -79,7 +83,7 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
             CHAT_USER_TEXT_COLOR
         ]
         self.fields[AUTO_OPEN].initial = self.object.config[AUTO_OPEN]
-        self.fields["keyword"].initial = self.object.config[WELCOME_BUTTON]
+        self.fields[KEYWORD].initial = self.object.config[WELCOME_BUTTON]
         self.fields[WELCOME_MESSAGE].initial = self.object.config[WELCOME_MESSAGE]
 
     class Meta:
@@ -94,8 +98,8 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
         instance = super(PushinhoFormUpdate, self).save(commit=False)
         data = self.data
 
-        main_icon_url = self["main_icon"].value()
-        chat_icon_url = self["chat_icon"].value()
+        main_icon_url = self[MAIN_ICON].value()
+        chat_icon_url = self[CHAT_ICON].value()
 
         if not main_icon_url:
             main_icon_url = instance.config.get(MAIN_ICON_URL)
@@ -111,6 +115,6 @@ class PushinhoFormUpdate(PushinhoForm, UpdateChannelForm):
             main_icon_url=main_icon_url, chat_icon_url=chat_icon_url, data=data
         )
 
-        instance.name = data["channel_name"]
+        instance.name = data[CHANNEL_NAME]
         instance.config = config
         return super().save(commit)
