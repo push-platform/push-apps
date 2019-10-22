@@ -8,6 +8,8 @@ For run the features for New Push, you need to setup a [RapidPro](http://rapidpr
 
 ### Configure `settings.py` for New Push
 
+There is a file called `push_public_settings.txt` with all necessary variables for run and add push_public on rapidpro/temba. You can copy this file and add on `settings.py.dev` on `/temba`
+
 It's necessary to configure the `settings.py` to enable NewPush on RapidPro.. Then, Application for RapidPro can see templates and code (channel_types, installed_apps and etc).  
 
 For configure the settings, must override the variables:
