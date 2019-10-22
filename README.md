@@ -12,7 +12,7 @@ It's necessary to configure the `settings.py` to enable NewPush on RapidPro.. Th
 
 For configure the settings, must override the variables:
 
-* `CHANNEL_TYPES = (*CHANNEL_TYPES, "a_list_contains_paths_for_new_channels_on_push")`
+* `CHANNEL_TYPES = (*CHANNEL_TYPES, "push_public.general.channels.types.pushinho.PushinhoType")`
 
 * `INSTALLED_APPS = (*INSTALLED_APPS, "push_public")`
 	- If you need install libs for use in django project, must be add `INSTALLED_APPS` variable
@@ -20,6 +20,8 @@ For configure the settings, must override the variables:
 * `BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))`
 
 * `TEMPLATES[0]["DIRS"] = [os.path.join(PROJECT_DIR, "../templates"), os.path.join(BASE_DIR, "push_public/templates")]`
+
+* `APP_URLS = ["push_public.urls"]`
 
 ### Environment Variables for New Push
 
