@@ -5,10 +5,10 @@ from smartmin.views import SmartFormView
 
 from temba.channels.models import Channel
 from temba.channels.views import ClaimViewMixin
-from temba.contacts.models import EXTERNAL_SCHEME
 
 from .forms import PushinhoFormCreate
 from .utils import (
+    PUSHINHO_SCHEME,
     CHANNEL_NAME,
     MAIN_ICON,
     CHAT_ICON,
@@ -56,7 +56,7 @@ class PushinhoView(ClaimViewMixin, SmartFormView):
             channel_type=self.channel_type,
             config=config,
             role=role,
-            schemes=[EXTERNAL_SCHEME],
+            schemes=[PUSHINHO_SCHEME],
             parent=channel,
         )
 

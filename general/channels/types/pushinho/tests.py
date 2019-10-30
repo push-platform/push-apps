@@ -7,9 +7,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from temba.tests import TembaTest
 
 from temba.channels.models import Channel
-from temba.contacts.models import EXTERNAL_SCHEME
 
 from .utils import (
+    PUSHINHO_SCHEME,
     CHANNEL_NAME,
     MAIN_ICON,
     MAIN_ICON_COLOR,
@@ -79,7 +79,7 @@ class PushinhoTypeTest(TembaTest):
         self.assertEqual(
             pushinho_channel.role, Channel.ROLE_SEND + Channel.ROLE_RECEIVE
         )
-        self.assertEqual(pushinho_channel.schemes, [EXTERNAL_SCHEME])
+        self.assertEqual(pushinho_channel.schemes, [PUSHINHO_SCHEME])
         self.assertTrue(pushinho_channel.config)
         self.assertEqual(
             pushinho_channel.config.get("send_url"), settings.PUSH_WEB_SOCKET_URL

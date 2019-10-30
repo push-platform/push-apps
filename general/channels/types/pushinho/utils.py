@@ -5,6 +5,7 @@ from django.conf import settings
 from temba.channels.models import Channel
 from temba.utils.s3 import public_file_storage
 
+PUSHINHO_SCHEME = "ps"
 CHANNEL_NAME = "channel_name"
 MAIN_ICON = "main_icon"
 MAIN_ICON_COLOR = "main_icon_color"
