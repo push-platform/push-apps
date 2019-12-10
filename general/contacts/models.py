@@ -13,6 +13,7 @@ from temba.contacts.models import (
     WECHAT_SCHEME,
     FCM_SCHEME,
     WHATSAPP_SCHEME,
+    FRESHCHAT_SCHEME,
 )
 
 
@@ -30,5 +31,6 @@ URN_SCHEME_CONFIG = (
     (WECHAT_SCHEME, _("WeChat identifier"), WECHAT_SCHEME),
     (FCM_SCHEME, _("Firebase Cloud Messaging identifier"), FCM_SCHEME),
     (WHATSAPP_SCHEME, _("WhatsApp identifier"), WHATSAPP_SCHEME),
+    (FRESHCHAT_SCHEME, _("Freshchat identifier"), FRESHCHAT_SCHEME),
     ("ps", _("Pushinho identifier"), "ps"),
 )
